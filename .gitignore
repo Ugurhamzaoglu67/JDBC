@@ -28,6 +28,8 @@ target/
 *.iws
 *.iml
 *.ipr
+.DatabaseTest
+/DatabaseTest
 
 ### NetBeans ###
 /nbproject/private/
