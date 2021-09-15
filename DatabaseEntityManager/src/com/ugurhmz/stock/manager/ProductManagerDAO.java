@@ -174,6 +174,7 @@ public class ProductManagerDAO {			// Data Access Object (DAO)
 		try {
 			PreparedStatement statement = connection.prepareStatement(sqlListALl);
 			statement.setDouble(1, salesPrice);
+			
 			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next()) {
@@ -197,8 +198,36 @@ public class ProductManagerDAO {			// Data Access Object (DAO)
 	}
 	
 	
-	
-	
+	// LIST ALL CONDITION 
+	public List<Product> listAllByProductNameLike(String likeproductName, double salesPrice) throws ClassNotFoundException  {
+		List<Product> listProduct = new ArrayList<>();
+		Connection connection = Utilities.getConnection();
+		String sqlList = "Select * FROM  Product WHERE productName like ? or salesPrice>=?";
+		
+		try {
+			PreparedStatement statement = connection.prepareStatement(sqlList);
+			statement.setString(1, likeproductName);
+			statement.setDouble(2, salesPrice);
+			
+			ResultSet rs = statement.executeQuery();
+			
+			while(rs.next()) {
+				Product product = new Product();
+				product.setProductId(rs.getLong("productId"));
+				product.setProductName(rs.getString("productName"));
+				product.setSalesPrice(rs.getDouble("salesPrice"));
+				
+				listProduct.add(product);
+			}
+			
+			
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return listProduct;
+	}
 	
 }
 
