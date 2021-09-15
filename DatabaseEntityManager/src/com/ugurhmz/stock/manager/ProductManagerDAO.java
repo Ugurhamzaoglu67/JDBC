@@ -72,6 +72,29 @@ public class ProductManagerDAO {			// Data Access Object (DAO)
 	
 	
 	
+	// UPDATE
+	public boolean update(Product product) throws ClassNotFoundException {
+		Connection connection = Utilities.getConnection();
+		String sqlUpdate ="UPDATE Product SET productName=?, salesPrice=? WHERE productId=?";
+		int affected = 0;
+		
+		try {
+			PreparedStatement statement = connection.prepareStatement(sqlUpdate);
+			statement.setString(1,product.getProductName());
+			statement.setDouble(2,product.getSalesPrice());
+			statement.setLong(3, product.getProductId());
+			
+			affected = statement.executeUpdate();
+			
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return affected == 1 ? true : false;
+	}
+	
 	
 	
 	
