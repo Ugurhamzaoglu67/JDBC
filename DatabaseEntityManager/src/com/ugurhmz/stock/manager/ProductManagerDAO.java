@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -159,6 +160,41 @@ public class ProductManagerDAO {			// Data Access Object (DAO)
 		return productList;
 	}
 	
+	
+	
+	
+	
+	// LIST ALL BY CONDITION
+	public List<Product> listAllBySalesPriceGreaterThan(double salesPrice) throws ClassNotFoundException, SQLException{
+		List<Product> productList = new ArrayList<>();
+		Connection connection = Utilities.getConnection();
+		String sqlListALl = " Select * FROM  Product WHERE salesPrice>=?";
+		
+		
+		try {
+			PreparedStatement statement = connection.prepareStatement(sqlListALl);
+			statement.setDouble(1, salesPrice);
+			ResultSet rs = statement.executeQuery();
+			
+			while(rs.next()) {
+				Product product = new Product();
+				product.setProductId(rs.getLong("productId"));
+				product.setProductName(rs.getString("productName"));
+				product.setSalesPrice(rs.getDouble("salesPrice"));
+				
+				productList.add(product);
+			}
+			
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		connection.close();
+		return productList;
+	}
 	
 	
 	
