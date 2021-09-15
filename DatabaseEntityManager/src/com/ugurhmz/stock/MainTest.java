@@ -7,11 +7,17 @@ public class MainTest {
 
 	public static void main(String[] args) {
 		
-		Product product1 = new Product(0,"Nike Shoes",550);
+		Product product1 = new Product(0,"Puma",650);
 		
 		
 		ProductManager manager = new ProductManager();
-		manager.insert(product1);
+		
+		try {
+			manager.insert(product1);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

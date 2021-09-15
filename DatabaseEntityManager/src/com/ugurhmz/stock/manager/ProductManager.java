@@ -1,26 +1,23 @@
 package com.ugurhmz.stock.manager;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import com.ugurhmz.stock.database.Utilities;
 import com.ugurhmz.stock.entity.Product;
 
 public class ProductManager {
 
 	
 	// INSERT  
-	public boolean insert(Product product) {
+	public boolean insert(Product product) throws ClassNotFoundException {
 		
-		
-		String url = "jdbc:mysql://localhost:3306/jdbcexample";
-		String dbName = "root";
-		String password = "1994ugur";
 		int affected = 0;
 		
 		try {
-			Connection connection = DriverManager.getConnection(url, dbName, password);
+			Connection connection = Utilities.getConnection();
+			
 			String sqlInsert = "INSERT INTO Product(productName, salesPrice) VALUES(?,?)";
 			PreparedStatement statement = connection.prepareStatement(sqlInsert);
 			
