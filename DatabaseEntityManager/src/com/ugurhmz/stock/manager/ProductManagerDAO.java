@@ -72,6 +72,8 @@ public class ProductManagerDAO {			// Data Access Object (DAO)
 	
 	
 	
+	
+	
 	// UPDATE
 	public boolean update(Product product) throws ClassNotFoundException {
 		Connection connection = Utilities.getConnection();
@@ -96,6 +98,32 @@ public class ProductManagerDAO {			// Data Access Object (DAO)
 	}
 	
 	
+	
+	
+	
+	
+	
+	// DELETE
+	public boolean delete(long productId) throws ClassNotFoundException {
+		Connection connection = Utilities.getConnection();
+		int affected = 0;
+		
+		try {
+			String sqlDelete = "DELETE  FROM Product WHERE productId=?";
+			PreparedStatement statement = connection.prepareStatement(sqlDelete);
+			statement.setLong(1, productId);
+			
+			affected = statement.executeUpdate();
+			
+			connection.close();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return affected == 1 ? true : false;
+	}
 	
 	
 	
