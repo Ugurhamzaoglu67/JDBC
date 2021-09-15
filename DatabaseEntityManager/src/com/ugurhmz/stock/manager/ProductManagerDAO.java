@@ -4,6 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import com.ugurhmz.stock.database.Utilities;
 import com.ugurhmz.stock.entity.Product;
@@ -127,7 +132,32 @@ public class ProductManagerDAO {			// Data Access Object (DAO)
 	
 	
 	
-	
+	// LIST ALL 
+	public Set<Product> listAll() throws ClassNotFoundException{
+		Set<Product> productList = new TreeSet<>();
+		
+		Connection connection = Utilities.getConnection();
+		String sqlListAll = "SELECT * FROM  Product";
+		try {
+			PreparedStatement statement = connection.prepareStatement(sqlListAll);
+			ResultSet rs = statement.executeQuery();
+			
+			while(rs.next()) {
+				Product product = new Product();						// (1)  Nesne Oluþturdukl
+				product.setProductId(rs.getLong("productId"));			// (2) Nesnenin deðerlerini set ettik.
+				product.setProductName(rs.getString("productName"));
+				product.setSalesPrice(rs.getDouble("salesPrice"));
+				
+				productList.add(product);								// (3) sonrada bu nesneyi HashSet'e ekledik.
+			}
+			
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return productList;
+	}
 	
 	
 	
@@ -135,3 +165,17 @@ public class ProductManagerDAO {			// Data Access Object (DAO)
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
