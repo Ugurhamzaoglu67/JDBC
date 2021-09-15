@@ -1,16 +1,17 @@
-package com.ugurhmz.stock;
+package com.ugurhmz.stock.tests;
 
 import com.ugurhmz.stock.entity.Product;
-import com.ugurhmz.stock.manager.ProductManager;
+import com.ugurhmz.stock.manager.ProductManagerDAO;
 
-public class MainTest {
+public class ProductInsertTest {
 
 	public static void main(String[] args) {
 		
 		Product product1 = new Product(0,"Puma",650);
+		ProductManagerDAO manager = new ProductManagerDAO();
 		
 		
-		ProductManager manager = new ProductManager();
+		
 		
 		try {
 			manager.insert(product1);

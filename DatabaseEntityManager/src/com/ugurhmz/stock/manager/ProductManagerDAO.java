@@ -2,15 +2,17 @@ package com.ugurhmz.stock.manager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.ugurhmz.stock.database.Utilities;
 import com.ugurhmz.stock.entity.Product;
 
-public class ProductManager {
+public class ProductManagerDAO {			// Data Access Object (DAO)
 
 	
-	// INSERT  
+	
+	// INSERT  		DTO
 	public boolean insert(Product product) throws ClassNotFoundException {
 		
 		int affected = 0;
@@ -28,14 +30,57 @@ public class ProductManager {
 			
 			connection.close();
 			System.out.println("Insert success...");
+			
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		
+	
 		
 		return affected == 1 ? true : false;
 		
 	}
+	
+	
+	
+	
+	
+	// FIND BY ID					DTO
+	public Product findById(long productId) throws ClassNotFoundException, SQLException {
+		Product product = null;
+		
+		Connection connection = Utilities.getConnection();
+		String sqlFindById = "SELECT * FROM Product WHERE productId=?";
+		
+		
+			PreparedStatement statement = connection.prepareStatement(sqlFindById);
+			statement.setLong(1, productId);
+			ResultSet rs = statement.executeQuery();
+			
+			if(rs.next()) {
+				product = new Product();
+				product.setProductId(rs.getLong("productId"));
+				product.setProductName(rs.getString("productName"));
+				product.setSalesPrice(rs.getDouble("salesPrice"));
+			} 
+			
+			
+			connection.close();
+		
+		return product;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
