@@ -15,11 +15,13 @@ public class EmployeeListInnerJoinTest {
 		
 		try {
 			Connection connection = Utilities.getConnection();
-			String sqlInnerJoin = "select employeeId, employeeName, monthlySalary, Employee.departmentId, departmentName \r\n"
+		/*	String sqlInnerJoin = "select employeeId, employeeName, monthlySalary, Employee.departmentId, departmentName \r\n"
 					+ "	FROM Employee\r\n"
 					+ "	inner join Department\r\n"
 					+ "		on Employee.departmentId = Department.departmentId";
+			*/
 			
+			String sqlInnerJoin = "select * from EmployeeView";	//Join olan kodu, view olarak tanýmlandý.
 			PreparedStatement statement = connection.prepareStatement(sqlInnerJoin);
 			ResultSet rs = statement.executeQuery();
 			

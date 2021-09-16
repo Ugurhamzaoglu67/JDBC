@@ -27,10 +27,14 @@ public class EmployeeFindOneInnerJoinByCondition {
 		try  {
 			
 			Connection connection = Utilities.getConnection();
-			String sqlFindOne= "SELECT Employee.*, departmentName\r\n"
+			/*String sqlFindOne= "SELECT Employee.*, departmentName\r\n"
 					+ "				FROM Employee INNER JOIN Department\r\n"
 					+ "					ON Employee.departmentId = Department.departmentId\r\n"
-					+ "						WHERE employeeId=?;";
+					+ "						WHERE employeeId=?;";*/
+			
+			String sqlFindOne = "SELECT * FROM EmployeeView WHERE employeeId=?";
+			
+			
 			
 			PreparedStatement statement = connection.prepareStatement(sqlFindOne);
 			statement.setInt(1, 8);
